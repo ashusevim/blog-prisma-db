@@ -8,7 +8,7 @@ It includes:
 - Migration history tracking
 - Schema definition with Prisma
 
-Database: PostgreSQL
+Tech stack: Typescript, Expressjs, Prisma, PostgreSQL
 
 Key features:
 - Database schema versioning
