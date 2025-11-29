@@ -1,8 +1,6 @@
 import { Router } from "express";
 import cors from "cors";
 import morgan from "morgan";
-import bcrypt from "bcrypt";
-import { prisma } from "/home/wanony/projects/db-schema-and-migrations/blog-prisma-db/src/db/prisma.ts";
 import usersRouter from "./routes/users";
 import postsRouter from "./routes/posts"
 

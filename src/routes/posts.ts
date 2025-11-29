@@ -4,6 +4,30 @@ import { userInfo } from "node:os";
 
 const router = Router();
 
+router.get("", async (req, res) => {
+	const page = (req.query.page as string) || 1;
+	const limit = (req.query.limit as string) || 10;
+
+	const posts = await prisma.post.findMany({
+		skip: (page - 1) * limit,
+		take: limit,
+		orderBy: { createdAt: "desc" },
+		select: {
+			id: true,
+			title: true,
+			body: true,
+			userId: true,
+			createdAt: true,
+		},
+	});
+
+	res.json({
+		page,
+		limit,
+		posts,
+	});
+});
+
 router.post("", async (req, res) => {
 	const { title, body, userId } = req.body;
 
