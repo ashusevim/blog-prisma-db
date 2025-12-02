@@ -4,8 +4,8 @@ import { prisma } from "../db/prisma";
 const router = Router();
 
 router.get("", async (req, res) => {
-    const page = (req.query.page as string) || 1;
-    const limit = (req.query.limit as string) || 10;
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 10;
 
     try {
         const posts = await prisma.post.findMany({
