@@ -12,7 +12,7 @@ router.post("/posts/:id/likes", async (req, res) => {
     }
 
     try {
-        const like = await prisma.like.create({
+        await prisma.like.create({
             data: {
                 postId,
                 userId,
@@ -25,10 +25,18 @@ router.post("/posts/:id/likes", async (req, res) => {
             },
         });
 
-        res.json(like);
+        res.json({
+            liked: true,
+        });
     } catch (error) {
+        if (error == "p2002") {
+            return res.json({
+                liked: true,
+                message: "user has already liked this post",
+            });
+        }
         console.log(error);
-        res.status(500).json({ error: "Failed to like on post" });
+        res.status(400).json({ error: "Failed to like on post" });
     }
 });
 

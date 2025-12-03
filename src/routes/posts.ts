@@ -68,4 +68,52 @@ router.post("", async (req, res) => {
     }
 });
 
+router.get("/posts/:id", async (req, res) => {
+    const postId = parseInt(req.params.id);
+
+    if (!postId) {
+        res.status(400).json({
+            error: "userId is required",
+        });
+    }
+
+    try {
+        const post = await prisma.post.findUnique({
+            where: { id: postId },
+            select: {
+                id: true,
+                title: true,
+                body: true,
+                postId: true,
+                createdAt: true,
+                user: {
+                    select: {
+                        id: true,
+                        handle: true,
+                    },
+                },
+                _count: {
+                    select: {
+                        likes: true,
+                        comments: true,
+                    },
+                },
+            },
+        });
+
+        if (!post) {
+            return res.status(404).json({
+                error: "Post not found",
+            });
+        }
+
+        res.json(post);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            error: "Failed to fetch post",
+        });
+    }
+});
+
 export default router;
