@@ -3,7 +3,7 @@ import { prisma } from "../db/prisma";
 
 const router = Router();
 
-router.get("", async (req, res) => {
+router.get("/posts", async (req, res) => {
     const page = parseInt(req.query.page as string) || 1;
     const limit = parseInt(req.query.limit as string) || 10;
 
@@ -34,7 +34,7 @@ router.get("", async (req, res) => {
     }
 });
 
-router.post("", async (req, res) => {
+router.post("/posts/create", async (req, res) => {
     const { title, body, userId } = req.body;
 
     if (!title || !userId) {
